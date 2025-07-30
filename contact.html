@@ -87,14 +87,17 @@
                                 <textarea class="form-control" name="message" placeholder="Message" rows="3" required></textarea>
                             </div>
                             <div class="mb-3">
-                                <button type="submit" class="btn btn-primary">Send Message</button>
+                                <button type="submit" class="btn btn-primary" id="submit-btn">
+                                    <span id="button-text">Send Message</span>
+                                    <span id="loader" style="display: none;">Loading...</span>
+                                </button>
                             </div>
 
                             <div id="success-message" class="alert alert-success" style="display: none;">
                                 <strong>Submitted Successfully</strong><br>Thanks for contacting with me.
                             </div>
                             <div id="error-message" class="alert alert-danger" style="display: none;">
-                                <strong>Error!</strong><br>Something went wrong. Please try again later.
+                                <strong>Error!</strong><br><span id="error-text">Something went wrong. Please try again later.</span>
                             </div>
                         </form>
                     </div>
@@ -148,32 +151,68 @@
         document.getElementById("contact-form").addEventListener("submit", function(event) {
             event.preventDefault();
 
-            var formData = {
-                name: $("input[name='name']").val(),
-                email: $("input[name='email']").val(),
-                phone: $("input[name='phone']").val(),
-                message: $("textarea[name='message']").val()
+            // Hide any previous messages
+            document.getElementById('success-message').style.display = 'none';
+            document.getElementById('error-message').style.display = 'none';
+
+            // Get form data using vanilla JavaScript
+            const formData = {
+                name: document.querySelector("input[name='name']").value.trim(),
+                email: document.querySelector("input[name='email']").value.trim(),
+                phone: document.querySelector("input[name='phone']").value.trim(),
+                message: document.querySelector("textarea[name='message']").value.trim()
             };
 
-            fetch('http://localhost:5000/submit-contact', {
+            // Basic validation
+            if (!formData.name || !formData.email || !formData.message) {
+                document.getElementById('error-text').textContent = 'Please fill in all required fields.';
+                document.getElementById('error-message').style.display = 'block';
+                return;
+            }
+
+            // Show loading state
+            document.getElementById('submit-btn').disabled = true;
+            document.getElementById('loader').style.display = 'inline-block';
+            document.getElementById('button-text').style.display = 'none';
+
+            console.log('Sending data:', formData); // Debug log
+
+            fetch('https://protfolio-backend-96gz.onrender.com/submit-contact', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(formData)
             })
-            .then(response => response.json())
+            .then(response => {
+                console.log('Response status:', response.status); // Debug log
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
             .then(data => {
+                console.log('Response data:', data); // Debug log
                 if (data.status === 'success') {
-                    $("#success-message").show();
-                    $("#contact-form")[0].reset();
-                } else if (data.status === 'error') {
-                    $("#error-message").text(data.message).show();
+                    document.getElementById('success-message').style.display = 'block';
+                    document.getElementById('contact-form').reset();
+                    // Scroll to success message
+                    document.getElementById('success-message').scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    document.getElementById('error-text').textContent = data.message || 'Something went wrong. Please try again later.';
+                    document.getElementById('error-message').style.display = 'block';
                 }
             })
             .catch(error => {
-                $("#error-message").text('Something went wrong. Please try again later.').show();
-                console.error('Error:', error);
+                console.error('Fetch error:', error);
+                document.getElementById('error-text').textContent = 'Network error. Please check your connection and try again.';
+                document.getElementById('error-message').style.display = 'block';
+            })
+            .finally(() => {
+                // Reset button state
+                document.getElementById('loader').style.display = 'none';
+                document.getElementById('button-text').style.display = 'inline-block';
+                document.getElementById('submit-btn').disabled = false;
             });
         });
     </script>
