@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ICE Jersey Order System | Project Showcase</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="icon" type="image/png" href="images/man-removebg-preview.png">
+
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #ffffff;
+      color: #1a1a2e;
+      overflow-x: hidden;
+      position: relative;
+      padding-top: 70px;
+    }
+
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    }
+
+    .particle {
+      position: absolute;
+      background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.3), transparent);
+      height: 2px;
+      width: 100%;
+      animation: moveLine 8s linear infinite;
+      opacity: 0.6;
+    }
+
+    .particle:nth-child(odd) {
+      background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.3), transparent);
+      animation-duration: 10s;
+      height: 3px;
+    }
+
+    .particle:nth-child(3n) {
+      background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.25), transparent);
+      animation-duration: 12s;
+      height: 1px;
+    }
+
+    @keyframes moveLine {
+      0% {
+        transform: translateX(-100%) translateY(0) rotate(-5deg);
+        opacity: 0;
+      }
+
+      10% {
+        opacity: 0.6;
+      }
+
+      90% {
+        opacity: 0.6;
+      }
+
+      100% {
+        transform: translateX(100%) translateY(50vh) rotate(5deg);
+        opacity: 0;
+      }
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
+      position: relative;
+    }
+
+    .hero-content {
+      z-index: 2;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero h1 {
+      font-size: 4rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from {
+        filter: drop-shadow(0 0 10px rgba(102, 126, 234, 0.3));
+      }
+
+      to {
+        filter: drop-shadow(0 0 20px rgba(118, 75, 162, 0.5));
+      }
+    }
+
+    .hero h5 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      color: #4b5563;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      max-width: 700px;
+      margin: 0 auto 40px;
+      color: #6b7280;
+      line-height: 1.8;
+    }
+
+    .image-slider {
+      position: relative;
+      max-width: 900px;
+      height: 500px;
+      margin: 0 auto;
+      border-radius: 25px;
+      overflow: hidden;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+    }
+
+    .slider-container {
+      display: flex;
+      height: 100%;
+      transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    .slide {
+      min-width: 100%;
+      height: 100%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 20px;
+    }
+
+    .slider-indicators {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+      z-index: 10;
+    }
+
+    .indicator {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.4);
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .indicator.active {
+      background: #fff;
+      width: 35px;
+      border-radius: 6px;
+    }
+
+    .content-section {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      border-radius: 25px;
+      padding: 50px 30px;
+      margin: 50px auto;
+      max-width: 1200px;
+      border: 1px solid rgba(102, 126, 234, 0.15);
+      box-shadow: 0 20px 50px rgba(102, 126, 234, 0.1);
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 30px;
+      text-align: center;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      margin-top: 30px;
+    }
+
+    .feature-card {
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+      padding: 35px;
+      border-radius: 20px;
+      text-align: center;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border: 1px solid rgba(102, 126, 234, 0.15);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.15), transparent);
+      transition: left 0.5s;
+    }
+
+    .feature-card:hover::before {
+      left: 100%;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+    }
+
+    .feature-icon {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      display: inline-block;
+      animation: bounce 2s infinite;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    @keyframes bounce {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    .feature-card h5 {
+      font-size: 1.3rem;
+      margin-bottom: 15px;
+      font-weight: 600;
+      color: #1a1a2e;
+    }
+
+    .feature-card p {
+      color: #6b7280;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .tech-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 25px;
+    }
+
+    .badge-tech {
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+      color: #667eea;
+      padding: 12px 25px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border: 1px solid rgba(102, 126, 234, 0.2);
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+
+    .badge-tech:hover {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: #ffffff;
+      transform: scale(1.1);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+    }
+
+    .btn-custom {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #fff;
+      padding: 15px 40px;
+      border: none;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: inline-block;
+      margin: 10px;
+      text-decoration: none;
+      box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-custom:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(102, 126, 234, 0.6);
+      color: #fff;
+    }
+
+    .btn-secondary {
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      box-shadow: 0 10px 25px rgba(79, 172, 254, 0.4);
+    }
+
+    .btn-secondary:hover {
+      box-shadow: 0 15px 35px rgba(79, 172, 254, 0.6);
+    }
+
+    .architecture-diagram {
+      background: #fff;
+      border-radius: 15px;
+      padding: 30px;
+      margin-top: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .arch-layer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .arch-box {
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+      padding: 20px 30px;
+      border-radius: 12px;
+      border: 2px solid rgba(102, 126, 234, 0.3);
+      font-weight: 600;
+      min-width: 150px;
+      text-align: center;
+    }
+
+    .arch-arrow {
+      font-size: 2rem;
+      color: #667eea;
+    }
+
+    .footer {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 60px 20px 30px;
+      margin-top: 80px;
+      color: #ffffff;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      list-style: none;
+      margin: 30px 0;
+    }
+
+    .social-links a {
+      width: 50px;
+      height: 50px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 1.3rem;
+      transition: all 0.3s;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .social-links a:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-5px) scale(1.1);
+      box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2);
+    }
+
+    .copyright {
+      margin-top: 30px;
+      opacity: 0.7;
+      font-size: 0.9rem;
+    }
+
+    .footer-logo {
+      max-width: 150px;
+      height: auto;
+    }
+
+    .navbar {
+      background: rgba(255, 255, 255, 0.95) !important;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+      padding: 15px 0;
+    }
+
+    .navbar-brand {
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: #667eea !important;
+    }
+
+    .nav-link {
+      color: #4b5563 !important;
+      font-weight: 500;
+      margin: 0 10px;
+      transition: all 0.3s;
+    }
+
+    .nav-link:hover {
+      color: #667eea !important;
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .image-slider {
+        height: 350px;
+      }
+
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .arch-layer {
+        flex-direction: column;
+      }
+
+      .arch-arrow {
+        transform: rotate(90deg);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="particles" id="particles"></div>
+
+  <nav class="navbar navbar-expand-lg fixed-top">
+
+    <div class="container-fluid">
+      <a class="navbar-brand logo" href="index.html">The<span>Portfolio</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="service.html">Services</a></li>
+          <li class="nav-item"><a class="nav-link" href="portfolio.html">Portfolio</a></li>
+          <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
+          <li class="nav-item"><a class="nav-link active" href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+
+  </nav>
+
+  <section class="hero" id="overview">
+    <div class="container hero-content">
+      <h1>ICE Jersey Order System</h1>
+      <h5>Department of Information & Communication Engineering</h5>
+      <p>A comprehensive full-stack web application for managing departmental jersey orders. Features real-time order
+        tracking, secure admin dashboard, automated email notifications, and seamless payment integration with
+        bKash/Nagad.</p>
+
+      <div class="image-slider">
+        <div class="slider-container" id="sliderContainer">
+          <div class="slide">
+            <img src="images/jersey1.png" alt="Order Form">
+          </div>
+          <div class="slide">
+            <img src="images/jersey2.png" alt="Admin Dashboard">
+          </div>
+          <div class="slide">
+            <img src="images/jersey2.png" alt="Payment">
+          </div>
+          <div class="slide">
+            <img src="images/jersey1.png" alt="Email">
+          </div>
+        </div>
+        <div class="slider-indicators" id="indicators"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="content-section">
+      <h3 class="section-title">📘 Project Description</h3>
+      <p style="text-align: center; font-size: 1.1rem; line-height: 1.8;">
+        The <strong>ICE Jersey Order System</strong> is a production-ready web application designed to streamline the
+        jersey ordering process for the Department of ICE at BAUET. The system handles everything from initial order
+        placement to payment processing and admin management. Built with modern technologies and best practices, it
+        features secure authentication, real-time order tracking, automated email confirmations via Brevo, and
+        integrated mobile payment options for Bangladesh (bKash/Nagad).
+      </p>
+    </div>
+
+    <div class="content-section" id="features">
+      <h3 class="section-title">🚀 Key Features</h3>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <i class="fas fa-shopping-cart feature-icon"></i>
+          <h5>Smart Order Form</h5>
+          <p>User-friendly interface with real-time jersey number availability checking and dynamic pricing based on
+            customization options.</p>
+        </div>
+        <div class="feature-card">
+          <i class="fas fa-lock feature-icon"></i>
+          <h5>Secure Admin Panel</h5>
+          <p>JWT-based authentication, role management, and comprehensive order management dashboard with search and
+            filter capabilities.</p>
+        </div>
+        <div class="feature-card">
+          <i class="fas fa-envelope feature-icon"></i>
+          <h5>Email Automation</h5>
+          <p>Automated order confirmations and status updates sent to customers via Brevo email service with
+            professional templates.</p>
+        </div>
+        <div class="feature-card">
+          <i class="fas fa-mobile-alt feature-icon"></i>
+          <h5>Mobile Payments</h5>
+          <p>Integrated bKash and Nagad payment options with transaction tracking and COD support for Bangladesh users.
+          </p>
+        </div>
+        <div class="feature-card">
+          <i class="fas fa-database feature-icon"></i>
+          <h5>PostgreSQL Database</h5>
+          <p>Robust data storage with proper indexing, relationships, and transaction management for data integrity.</p>
+        </div>
+        <div class="feature-card">
+          <i class="fas fa-chart-bar feature-icon"></i>
+          <h5>Analytics Dashboard</h5>
+          <p>Real-time statistics showing total orders, pending/completed status, and revenue tracking for admins.</p>
+        </div>
+        <div class="feature-card">
+          <i class="fas fa-shield-alt feature-icon"></i>
+          <h5>Security Features</h5>
+          <p>Rate limiting, Helmet.js security headers, bcrypt password hashing, and SQL injection prevention.</p>
+        </div>
+        <div class="feature-card">
+          <i class="fas fa-mobile feature-icon"></i>
+          <h5>Responsive Design</h5>
+          <p>Fully responsive UI built with Bootstrap and custom CSS, optimized for desktop, tablet, and mobile devices.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-section" id="tech">
+      <h3 class="section-title">🧠 Tech Stack</h3>
+
+      <h5 style="text-align: center; margin-top: 30px; color: #667eea;">Frontend Technologies</h5>
+      <div class="tech-badges">
+        <span class="badge-tech">HTML5</span>
+        <span class="badge-tech">CSS3</span>
+        <span class="badge-tech">JavaScript (ES6+)</span>
+        <span class="badge-tech">Bootstrap 5</span>
+        <span class="badge-tech">Tailwind CSS</span>
+        <span class="badge-tech">AOS Animations</span>
+        <span class="badge-tech">Axios</span>
+      </div>
+
+      <h5 style="text-align: center; margin-top: 40px; color: #764ba2;">Backend Technologies</h5>
+      <div class="tech-badges">
+        <span class="badge-tech">Node.js</span>
+        <span class="badge-tech">Express.js</span>
+        <span class="badge-tech">PostgreSQL</span>
+        <span class="badge-tech">JWT Authentication</span>
+        <span class="badge-tech">bcrypt.js</span>
+        <span class="badge-tech">Helmet.js</span>
+        <span class="badge-tech">Express Rate Limit</span>
+      </div>
+
+      <h5 style="text-align: center; margin-top: 40px; color: #4facfe;">Third-Party Services</h5>
+      <div class="tech-badges">
+        <span class="badge-tech">Brevo Email API</span>
+        <span class="badge-tech">bKash Integration</span>
+        <span class="badge-tech">Nagad Integration</span>
+        <span class="badge-tech">Render Hosting</span>
+      </div>
+    </div>
+
+    <div class="content-section" id="architecture">
+      <h3 class="section-title">🏗️ System Architecture</h3>
+
+      <div class="architecture-diagram">
+        <div class="arch-layer">
+          <div class="arch-box">
+            <i class="fas fa-desktop" style="display: block; font-size: 2rem; margin-bottom: 10px; color: #667eea;"></i>
+            Client (Browser)
+          </div>
+        </div>
+
+        <div class="arch-layer"><span class="arch-arrow">↓</span></div>
+
+        <div class="arch-layer">
+          <div class="arch-box">
+            <i class="fas fa-file-code"
+              style="display: block; font-size: 2rem; margin-bottom: 10px; color: #764ba2;"></i>
+            Frontend Layer<br><small>(HTML/CSS/JS)</small>
+          </div>
+        </div>
+
+        <div class="arch-layer"><span class="arch-arrow">↓</span></div>
+
+        <div class="arch-layer">
+          <div class="arch-box">
+            <i class="fas fa-server" style="display: block; font-size: 2rem; margin-bottom: 10px; color: #4facfe;"></i>
+            API Layer<br><small>(Express.js)</small>
+          </div>
+        </div>
+
+        <div class="arch-layer"><span class="arch-arrow">↓</span></div>
+
+        <div class="arch-layer">
+          <div class="arch-box">
+            <i class="fas fa-lock" style="display: block; font-size: 2rem; margin-bottom: 10px; color: #f093fb;"></i>
+            Auth Middleware<br><small>(JWT)</small>
+          </div>
+          <div class="arch-box">
+            <i class="fas fa-shield-alt"
+              style="display: block; font-size: 2rem; margin-bottom: 10px; color: #f5576c;"></i>
+            Security Layer<br><small>(Helmet/Rate Limit)</small>
+          </div>
+        </div>
+
+        <div class="arch-layer"><span class="arch-arrow">↓</span></div>
+
+        <div class="arch-layer">
+          <div class="arch-box">
+            <i class="fas fa-database"
+              style="display: block; font-size: 2rem; margin-bottom: 10px; color: #00f2fe;"></i>
+            Database<br><small>(PostgreSQL)</small>
+          </div>
+          <div class="arch-box">
+            <i class="fas fa-envelope"
+              style="display: block; font-size: 2rem; margin-bottom: 10px; color: #667eea;"></i>
+            Email Service<br><small>(Brevo API)</small>
+          </div>
+          <div class="arch-box">
+            <i class="fas fa-credit-card"
+              style="display: block; font-size: 2rem; margin-bottom: 10px; color: #764ba2;"></i>
+            Payment Gateway<br><small>(bKash/Nagad)</small>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: 40px;">
+        <h5 style="text-align: center; margin-bottom: 20px;"><i class="fas fa-network-wired"></i> Data Flow</h5>
+        <ol style="max-width: 700px; margin: 0 auto; line-height: 2;">
+          <li><strong>User submits order</strong> through the frontend form with jersey customization options</li>
+          <li><strong>Frontend validates</strong> input and checks jersey number availability via API</li>
+          <li><strong>API receives request</strong> and applies rate limiting and security checks</li>
+          <li><strong>Order stored</strong> in PostgreSQL database with pending status</li>
+          <li><strong>Email confirmation</strong> sent automatically via Brevo API to customer</li>
+          <li><strong>Admin notification</strong> email sent with order details</li>
+          <li><strong>Admin reviews</strong> order in dashboard and updates status</li>
+          <li><strong>Status update</strong> triggers confirmation email to customer</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="content-section">
+      <h3 class="section-title">🔌 API Endpoints</h3>
+      <div class="table-responsive">
+        <table class="table table-striped" style="max-width: 900px; margin: 0 auto;">
+          <thead style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+            <tr>
+              <th>Method</th>
+              <th>Endpoint</th>
+              <th>Description</th>
+              <th>Auth</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="badge bg-success">GET</span></td>
+              <td>/api/health</td>
+              <td>Health check endpoint</td>
+              <td>❌</td>
+            </tr>
+            <tr>
+              <td><span class="badge bg-primary">POST</span></td>
+              <td>/api/admin/login</td>
+              <td>Admin authentication</td>
+              <td>❌</td>
+            </tr>
+            <tr>
+              <td><span class="badge bg-success">GET</span></td>
+              <td>/api/admin/verify</td>
+              <td>Verify JWT token</td>
+              <td>✅</td>
+            </tr>
+            <tr>
+              <td><span class="badge bg-success">GET</span></td>
+              <td>/api/orders/check-jersey</td>
+              <td>Check jersey number availability</td>
+              <td>❌</td>
+            </tr>
+            <tr>
+              <td><span class="badge bg-primary">POST</span></td>
+              <td>/api/orders</td>
+              <td>Submit new order</td>
+              <td>❌</td>
+            </tr>
+            <tr>
+              <td><span class="badge bg-success">GET</span></td>
+              <td>/api/admin/orders</td>
+              <td>Get all orders (with pagination)</td>
+              <td>✅</td>
+            </tr>
+            <tr>
+              <td><span class="badge bg-success">GET</span></td>
+              <td>/api/admin/stats</td>
+              <td>Get order statistics</td>
+              <td>✅</td>
+            </tr>
+            <tr>
+              <td><span class="badge bg-warning">PATCH</span></td>
+              <td>/api/admin/orders/:id/status</td>
+              <td>Update order status</td>
+              <td>✅</td>
+            </tr>
+            <tr>
+              <td><span class="badge bg-danger">DELETE</span></td>
+              <td>/api/admin/orders/:id</td>
+              <td>Delete order</td>
+              <td>✅</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="content-section" id="demo">
+
+      <h3 class="section-title">🎯 Live Demo & Code</h3>
+      <p style="text-align: center; font-size: 1.1rem; margin-bottom: 30px;">
+        Experience the full-featured jersey ordering system with real-time order management.
+      </p>
+      <div style="text-align: center;">
+        <a href="https://ice-dep-jersee.vercel.app/" class="btn-custom" target="_blank">
+          <i class="fas fa-rocket"></i> Visit Live Site
+        </a>
+        <a href="https://github.com/NoorAbdullah02/Jersee_ice_Fortend" class="btn-custom btn-secondary" target="_blank">
+          <i class="fab fa-github"></i> Frontend Code
+        </a>
+        <a href="https://github.com/NoorAbdullah02/Jersee_ice_Backend" class="btn-custom btn-secondary" target="_blank">
+          <i class="fab fa-github"></i> Backend Code
+        </a>
+      </div>
+    </div>
+
+    <div class="content-section" id="contact">
+      <h3 class="section-title">📬 Get In Touch</h3>
+      <p style="text-align: center; font-size: 1.1rem; margin-bottom: 30px; color: #6b7280;">
+        Have questions about this project? Feel free to reach out!
+      </p>
+
+      <!-- Success Message -->
+      <div id="success-message" class="alert alert-success"
+        style="display: none; max-width: 600px; margin: 20px auto; border-radius: 15px; padding: 20px; border: none; box-shadow: 0 10px 25px rgba(76, 175, 80, 0.2);">
+        <div style="display: flex; align-items: center; gap: 15px;">
+          <i class="fas fa-check-circle" style="font-size: 1.5rem;"></i>
+          <div>
+            <h5 style="margin: 0; color: #1b5e20;">Message Sent Successfully!</h5>
+            <p style="margin: 5px 0 0 0; color: #2e7d32;">Thank you for reaching out. I'll get back to you soon!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Error Message -->
+      <div id="error-message" class="alert alert-danger"
+        style="display: none; max-width: 600px; margin: 20px auto; border-radius: 15px; padding: 20px; border: none; box-shadow: 0 10px 25px rgba(211, 47, 47, 0.2);">
+        <div style="display: flex; align-items: center; gap: 15px;">
+          <i class="fas fa-exclamation-circle" style="font-size: 1.5rem;"></i>
+          <div>
+            <h5 style="margin: 0; color: #b71c1c;">Error</h5>
+            <p id="error-text" style="margin: 5px 0 0 0; color: #c62828;"></p>
+          </div>
+        </div>
+      </div>
+
+
+
+        <style>
+          @keyframes spin {
+            0% {
+              transform: rotate(0deg);
+            }
+
+            100% {
+              transform: rotate(360deg);
+            }
+          }
+        </style>
+
+        <p style="text-align: center; margin-top: 15px; color: #999; font-size: 0.9rem;">
+          <i class="fas fa-lock"></i> Your information is secure and will not be shared.
+        </p>
+      </form>
+    </div>
+
+    <div class="content-section" id="video">
+      <h3 class="section-title">🎥 Project Demo Video</h3>
+      <div class="video-container" style="max-width: 800px; margin: 30px auto;">
+        <div class="ratio ratio-16x9">
+          <iframe src="https://www.youtube.com/embed/seH-u9GRzas" title="ICE Jersey Order System Demo" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <div class="logo">
+            <img src="images/logo.jpg" alt="Logo" class="footer-logo">
+          </div>
+
+          <div class="description">
+            <p>
+              I am Sheikh Noor Abdullah, a passionate BSc Engineering student dedicated to excellence.
+              My journey is fueled by a commitment to learning and innovation, with the goal of making
+              impactful contributions in my field. 🚀 Always pushing boundaries and reaching for the stars!
+            </p>
+          </div>
+
+          <div class="social">
+            <ul class="social-links">
+              <li><a href="https://www.facebook.com/profile.php?id=100013021931812" target="_blank"><i
+                    class="fab fa-facebook"></i></a></li>
+              <li><a href="https://www.linkedin.com/in/sheikhnoorabdullah/" target="_blank"><i
+                    class="fab fa-linkedin-in"></i></a></li>
+              <li><a href="https://x.com/NoorAbdullah101" target="_blank"><i class="fab fa-twitter"></i></a></li>
+              <li><a href="https://github.com/NoorAbdullah02" target="_blank"><i class="fab fa-github"></i></a></li>
+            </ul>
+          </div>
+
+          <div class="copyright">
+            <p>Copyright © 2025, Imran IT. All Rights Reserved.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <a href="" class="scrollup">
+    <i class="fas fa-chevron-up"></i>
+  </a>
+
+  <script>
+    // Contact form submission with backend integration
+    document.getElementById("contact-form").addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      // Hide any previous messages
+      document.getElementById('success-message').style.display = 'none';
+      document.getElementById('error-message').style.display = 'none';
+
+      // Get form data using vanilla JavaScript
+      const formData = {
+        name: document.querySelector("input[name='name']").value.trim(),
+        email: document.querySelector("input[name='email']").value.trim(),
+        phone: document.querySelector("input[name='phone']").value.trim(),
+        message: document.querySelector("textarea[name='message']").value.trim()
+      };
+
+      // Basic validation
+      if (!formData.name || !formData.email || !formData.message) {
+        document.getElementById('error-text').textContent = 'Please fill in all required fields.';
+        document.getElementById('error-message').style.display = 'block';
+        return;
+      }
+
+      // Show loading state
+      document.getElementById('submit-btn').disabled = true;
+      document.getElementById('loader').style.display = 'inline-block';
+      document.getElementById('button-text').style.display = 'none';
+
+      console.log('Sending data:', formData); // Debug log
+
+      fetch('https://protfolio-backend-96gz.onrender.com/submit-contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      })
+        .then(response => {
+          console.log('Response status:', response.status); // Debug log
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log('Response data:', data); // Debug log
+          if (data.status === 'success') {
+            document.getElementById('success-message').style.display = 'block';
+            document.getElementById('contact-form').reset();
+            // Scroll to success message
+            document.getElementById('success-message').scrollIntoView({ behavior: 'smooth' });
+          } else {
+            document.getElementById('error-text').textContent = data.message || 'Something went wrong. Please try again later.';
+            document.getElementById('error-message').style.display = 'block';
+          }
+        })
+        .catch(error => {
+          console.error('Fetch error:', error);
+          document.getElementById('error-text').textContent = 'Network error. Please check your connection and try again.';
+          document.getElementById('error-message').style.display = 'block';
+        })
+        .finally(() => {
+          // Reset button state
+          document.getElementById('loader').style.display = 'none';
+          document.getElementById('button-text').style.display = 'inline-block';
+          document.getElementById('submit-btn').disabled = false;
+        });
+    });
+  </script>
+
+</body>
+
+</html>
