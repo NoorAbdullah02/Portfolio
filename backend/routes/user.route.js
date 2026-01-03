@@ -98,7 +98,11 @@ router.post('/login', async (req, res) => {
             email
         }, process.env.JWT_SECRET, { expiresIn: '24h' });
 
-        res.cookie('token', token);
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure: true,        // REQUIRED for HTTPS (Render)
+            sameSite: 'None',    // REQUIRED for cross-origin
+        });
         return res.status(200).json({ message: 'Login successful', token });
 
 
